@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import InputForm from "./Components/InputForm";
+import TableResults from "./Components/TableResults";  
+import { calculateLoan } from "./Utils/CalculateLoan";
 
-function App() {
+const App = () => {
+  const [installment, setInstallment] = useState(null);
+
+  const handleCalculation = (data) => {
+    const result = calculateLoan(data);
+    setInstallment(result);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app-container">
+      <h1>Simulador de Financiamento</h1>
+      <InputForm onCalculate={handleCalculation} />
+      {installment && <TableResults installment={installment} />} 
     </div>
   );
-}
+};
 
 export default App;
